@@ -1,0 +1,16 @@
+* {
+bg0:    #21212190;
+bg1:    #22222222;
+bg2:    #3D3D3D80;
+bg3:    #1A73E8F2;
+//bg3: #cba6f7F2;		// purple
+//bg3: #cffecfF2;	   	// green
+//bg3:   #00eeeeF2;	//cyan
+//bg3: #ffd700F2;		// gold
+//bg3: #ffe4b5;			//skin
+
+fg0:    #E6E6E6;
+fg1:    #FFFFFF;
+fg2:    #969696;
+fg3:    #3D3D3D;
+}

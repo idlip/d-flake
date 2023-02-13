@@ -1,0 +1,46 @@
+"query:Bio feeds:unread = \"yes\" and tags # \"Bio\"" meta
+"query:Psy feeds:unread = \"yes\" and tags # \"psy\"" meta
+"query:Psy Today:unread = \"yes\" and tags # \"psydaily\"" meta
+"query:Science Articles:unread = \"yes\" and tags # \"Sci\"" meta
+"query:Reddit Show:unread = \"yes\" and tags # \"readit\"" meta
+"query:Annual Review Journals:unread = \"yes\" and tags # \"journal\"" meta
+"query:Dicover Magazine:unread = \"yes\" and tags # \"mag\"" meta
+"query:Movies:unread = \"yes\" and tags # \"movies\"" meta
+
+# {{{
+----Biological-AnyDay----
+https://journals.plos.org/plosbiology/feed/atom Bio
+http://blogs.biomedcentral.com/feed/ Bio
+https://rupress.org/rss/site_1000001/LatestArticles_1000003.xml Bio
+https://journals.biologists.com/rss/site_1000009/1000007.xml Bio
+https://www.biologycorner.com/feed/ Bio
+https://www.onlinebiologynotes.com/feed/ Bio
+https://bitesizebio.com/feed/ Bio
+http://feeds.feedburner.com/BiologyExams4U Bio
+https://journals.biologists.com/rss/site_1000001/1000003.xml Bio
+# }}}
+https://www.sciencedaily.com/rss/top/science.xml Sci
+
+https://www.sciencedaily.com/rss/most_popular.xml Sci
+
+# {{{
+----Psycic-Daily----
+http://www.apa.org/news/psycport/psycport-rss.xml psy
+https://www.nimh.nih.gov/site-info/index-rss.atom?format=xml psy
+https://www.psychologytoday.com/front/feed psydaily
+https://blogs.sussex.ac.uk/psychology/feed/ psy
+https://happyproject.in/feed/ psy
+# }}}
+
+----Reddit Mystery----
+https://www.reddit.com/r/psychology/.rss readit
+https://www.reddit.com/r/biology/.rss readit
+https://www.reddit.com/r/research/.rss readit
+https://www.reddit.com/r/science/.rss readit
+
+----Papers-&-Journals----
+https://www.annualreviews.org/action/showFeed?ui=45mu4&mi=3fndc3&ai=s1&jc=psych&type=etoc&feed=atom journal
+https://www.annualreviews.org/action/showFeed?ui=45mu4&mi=3fndc3&ai=sh&jc=ecolsys&type=etoc&feed=atom journal
+https://www.annualreviews.org/action/showFeed?ui=45mu4&mi=3fndc3&ai=68t8&jc=criminol&type=etoc&feed=atom journal
+https://www.annualreviews.org/action/showFeed?ui=45mu4&mi=3fndc3&ai=se&jc=biodatasci&type=etoc&feed=atom journal
+http://feeds.feedburner.com/AllDiscovermagazinecomContent mag

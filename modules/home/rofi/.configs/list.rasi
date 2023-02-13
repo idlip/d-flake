@@ -1,0 +1,52 @@
+
+configuration {
+font: "ComicCodeLigatures 22";
+background-color:   transparent;
+text-color:         @fg0;
+show-icons: true;
+}
+@import "~/.config/rofi/colors.rasi"
+
+window {
+   width: 85%;
+   height: 90%;
+   dynamic: true;
+   location:       center;
+   border-radius:  24px;
+   background-color:   @bg0;
+}
+
+listview {
+   dynamic: true;
+   scrollbar: false;
+   spacing: 0px;
+   padding: 1px 0px 0px 0px;
+   margin: 0px 0px 1px 0px;
+   columns: 1;
+   background-color:   transparent;
+   margin:     12px 0 0;
+   lines:      8;
+   fixed-height: false;
+}
+
+element {
+padding:        8px 16px;
+spacing:        8px;
+border-radius:  22px;
+}
+
+#element.normal.normal {
+background-color: @bg1;
+text-color: @fg1;
+}
+
+#element.alternate.normal {
+background-color: @bg1;
+text-color: @fg0;
+}
+
+element selected normal, element selected active {
+background-color:   @bg3;
+}
+
+
