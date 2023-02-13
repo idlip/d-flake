@@ -1,15 +1,24 @@
-*** Utilitied that are Best!
+*** Utilities that are Best!
 
-|----------------+--------------------------------|
-| Class          | Class                          |
-|----------------+--------------------------------|
-| [[file:modules/home/hyprland/][Window Manager]] | Hyprland 🌸                     |
-| Text Editor    | Emacs 💜                        |
-| Gtk Theme      | Catppuccin 😼                   |
-| Pdf Reader     | Sioyek (ditch zathura)         |
-| Media          | Hands down, MPV! (its MVP too) |
-| Rss Reader     | Elfeed (Again, Emacs)          |
-|----------------+--------------------------------|
+|------------------------+--------------------------------------|
+| Class                  | Name                                 |
+|------------------------+--------------------------------------|
+| [[file:modules/home/hyprland/][Window Manager]]         | [[https://hyprland.org/][Hyprland]] 🌸                           |
+| [[file:modules/home/emacs/][Text Editor]]            | [[https://www.gnu.org/software/emacs/][Emacs]] 💜                              |
+| [[file:modules/home/gtk/default.nix][Gtk Theme]]              | [[https://github.com/catppuccin/gtk][catppuccin]] 😼                         |
+| [[file:modules/home/sioyek/default.nix][Pdf Reader]]             | [[https://github.com/ahrm/sioyek][Sioyek]] 📔 (ditch zathura)             |
+| [[file:modules/home/media/default.nix][Media Player]]           | Hands down, [[https://mpv.io][MPV!]] 🎬 (its MVP too)     |
+| [[file:modules/home/emacs/.configs/elfeed.org][RSS Reader]]             | [[https://github.com/skeeto/elfeed][Elfeed]] 📰 (Again, Emacs)              |
+| [[file:modules/home/media/default.nix][Music Player]]           | [[https://github.com/ncmpcpp/ncmpcpp][Ncmpcpp]] or [[https://github.com//mingus][Mingus in Emacs]] 🎶         |
+| [[file:modules/home/foot/default.nix][Terminal]]               | [[https://codeberg.org/dnkl/foot][Foot]] via footclient                  |
+| [[file:modules/home/wofi/][Menu/Launcher]]          | [[https://hg.sr.ht/~scoopta/wofi][wofi]] 🐶                               |
+| [[file:modules/home/dunst/default.nix][Notification]]           | [[https://github.com/dunst/dunst][Dunst]]  🛎️                             |
+| [[file:modules/home/shell/default.nix][Shell]]                  | [[https://zsh.org][Zshell]] with [[https://starship.rs][Starship]] 🔰               |
+| [[file:modules/home/waybar/default.nix][Status Bar]]             | [[https://github.com/Alexays/Waybar][Waybar]]  🍥                            |
+| Favourite ColorSchemes | catppuccin + Modus-Vivendi + Gruvbox |
+|------------------------+--------------------------------------|
+Rest all other stuffs I do in Emacs, tbh I could do everything in Emacs lol.
+
 Feel free to open an issue and ask me doubts or some improvements you wanna inform! I will be glad.
 If you really wanna talk/discuss with me, open an issue so I will join on some media (Irc/matrix or telegram)
 
@@ -24,27 +33,28 @@ Tbh I loved LM and Arch alot, I was a devotee to Arch too, and I hated Nix when 
 + What files to edit to achieve same setup as my previous distro?
 
   These were all the things that I hated and was frustrated about, there was still many things that felt hard.
-  I did leave Nix and install Arch few times back and forth, I was debating with myself research all over Internet.
+  I did leave Nix and install Arch few times back and forth, I was debating with myself and id my own research all over Internet.
 
   That is when I thought nix lacked Documentation or good YouTuber to speak of, I really wish one of them could explain and make it their distro to explain timely on things.
 
-  Fine, somehow forced myself and came a long way of setting up Good working nixos config, now flake
+  Fine, somehow forced myself and came a long way of setting up Good working nixos config, now I'm on flake
 
-*** Now if you get doubts of, "Should I try NixOS?"
+*** Now if you get doubt of, "Should I try NixOS?"
 
-Here is an answer from non-programmer, who just browses and watched media.
-Just don't if you are looking for small benefit. Don't! You will regret having hard time to figure out petty things, again forget about error, you cannot even search in web.
+Here is an answer from a non-programmer, who just browse and watches media.
+Just don't, if you are looking for small benefit. Don't!
+You will regret having hard time to figure out petty things, again forget about error, you cannot even search in web.
 
 But, if you have decided, go with it. According to me (non-programmer), these points are good to consider NixOS
  + You use Emacs (lol), *Emacs* ❤️  *Nix* is Match made in Heaven.
  + You want to declare stuffs and get same output, and forget what all you setup, cause its all declared in config.
- + You want isolated environments (shell) to do some stuffs without involving whole system.
- + You want to stop troubleshooting and breaking update and are lazy to backup, and want to rollback with ease like before.
+ + You want an isolated environments (shell) to do some stuffs without involving whole system.
+ + You want to stop troubleshooting and breaking update and are lazy to backup, and want to rollback with ease like with just a reboot.
  + You want to say Nix Btw.
 
 
-* Pack your back, lets go through our configuration!
-Before that I believe you are a tinkerer, I have a motto which goes like
+* Pack your bags, lets go through our configuration!
+Before that I believe you are a tinkerer, I have a motto which goes like this
 + /If you want to understand the whole, Understand its parts/. *[[https://www.verywellmind.com/what-is-gestalt-psychology-2795808][Gestalt Psychology]]*
   
   I mean, that is how *Nix Philosophy or Linux users are, We understand each utility (grep, sed...) and make precise use of it, You can technically call it Magic of scripting.
