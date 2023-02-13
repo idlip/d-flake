@@ -3,7 +3,7 @@
 |----------------+--------------------------------|
 | Class          | Class                          |
 |----------------+--------------------------------|
-| Window Manager | Hyprland 🌸                     |
+| [[file:modules/home/hyprland/][Window Manager]] | Hyprland 🌸                     |
 | Text Editor    | Emacs 💜                        |
 | Gtk Theme      | Catppuccin 😼                   |
 | Pdf Reader     | Sioyek (ditch zathura)         |
