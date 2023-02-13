@@ -1,3 +1,38 @@
 * Welcome to 'Will of D' flakes system
 
-Soon will be documented.......
+My linux journey was from Linux Mint > EndeavourOS > Arch Linux > and now NixOS.
+
+Tbh I loved LM and Arch alot, I was a devotee to Arch too, and I hated Nix when I tried, cause things were weird.
++ You won't know where to start nor what to refer
++ Flakes or home-manager, How to understand?
++ Do nix-env or rebuild all the time?
++ What files to edit to achieve same setup as my previous distro?
+
+  These were all the things that I hated and was frustrated about, there was still many things that felt hard.
+  I did leave Nix and install Arch few times back and forth, I was debating with myself research all over Internet.
+
+  That is when I thought nix lacked Documentation or good YouTuber to speak of, I really wish one of them could explain and make it their distro to explain timely on things.
+
+  Fine, somehow forced myself and came a long way of setting up Good working nixos config, now flake
+
+*** Now if you get doubts of, "Should I try NixOS?"
+
+Here is an answer from non-programmer, who just browses and watched media.
+Just don't if you are looking for small benefit. Don't! You will regret having hard time to figure out petty things, again forget about error, you cannot even search in web.
+
+But, if you have decided, go with it. According to me (non-programmer), these points are good to consider NixOS
+ + You use Emacs (lol), *Emacs* ❤️  *Nix* is Match made in Heaven.
+ + You want to declare stuffs and get same output, and forget what all you setup, cause its all declared in config.
+ + You want isolated environments (shell) to do some stuffs without involving whole system.
+ + You want to stop troubleshooting and breaking update and are lazy to backup, and want to rollback with ease like before.
+ + You want to say Nix Btw.
+
+
+* Pack your back, lets go through our configuration!
+Before that I believe you are a tinkerer, I have a motto which goes like
++ /If you want to understand the whole, Understand its parts/. *[[https://www.verywellmind.com/what-is-gestalt-psychology-2795808][Gestalt Psychology]]*
+  
+  I mean, that is how *Nix Philosophy or Linux users are, We understand each utility (grep, sed...) and make precise use of it, You can technically call it Magic of scripting.
+
+  
+Soon will be more documented.......
