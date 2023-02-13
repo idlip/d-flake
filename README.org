@@ -1,3 +1,17 @@
+*** Utilitied that are Best!
+
+|----------------+--------------------------------|
+| Class          | Class                          |
+|----------------+--------------------------------|
+| Window Manager | Hyprland 🌸                     |
+| Text Editor    | Emacs 💜                        |
+| Gtk Theme      | Catppuccin 😼                   |
+| Pdf Reader     | Sioyek (ditch zathura)         |
+| Media          | Hands down, MPV! (its MVP too) |
+| Rss Reader     | Elfeed (Again, Emacs)          |
+|----------------+--------------------------------|
+
+
 * Welcome to 'Will of D' flakes system
 
 My linux journey was from Linux Mint > EndeavourOS > Arch Linux > and now NixOS.
