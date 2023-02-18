@@ -20,7 +20,6 @@
         env = {
           TERM = "xterm-256color";
         };
-        import = "~/.config/alacritty/catppuccin.yml";
       };
     };
   };
