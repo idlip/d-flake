@@ -14,13 +14,13 @@ in
     	vterm
 	    undo-tree
 	    flycheck
-      no-littering doom-themes modus-themes vertico-posframe rainbow-delimiters rainbow-mode vertico 
+      no-littering  vertico-posframe rainbow-delimiters rainbow-mode vertico 
       orderless consult marginalia embark embark-consult org olivetti org-modern corfu cape
       markdown-mode nix-mode
       all-the-icons-dired async dired-hide-dotfiles dired-single 
       reddigg mingus pdf-tools vterm which-key
-      org-mime catppuccin-theme
-      sdcv elfeed elfeed-org link-hint general
+      org-mime catppuccin-theme corfu-terminal
+      sdcv elfeed elfeed-org link-hint general powerthesaurus
       doom-modeline org-auto-tangle 
       ])
     );

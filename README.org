@@ -4,10 +4,10 @@
 | Class                  | Name                                 |
 |------------------------+--------------------------------------|
 | [[file:modules/home/hyprland/][Window Manager]]         | [[https://hyprland.org/][Hyprland]] 🌸                           |
-| [[file:modules/home/emacs/][Text Editor]]            | [[https://www.gnu.org/software/emacs/][Emacs]] 💜                              |
+| [[file:modules/home/emacs/][Text Editor]]            | [[https://www.gnu.org/software/emacs/][Emacs]] 💮                               |
 | [[file:modules/home/gtk/default.nix][Gtk Theme]]              | [[https://github.com/catppuccin/gtk][catppuccin]] 😼                         |
 | [[file:modules/home/sioyek/default.nix][Pdf Reader]]             | [[https://github.com/ahrm/sioyek][Sioyek]] 📔 (ditch zathura)             |
-| [[file:modules/home/media/default.nix][Media Player]]           | Hands down, [[https://mpv.io][MPV!]] 🎬 (its MVP too)     |
+| [[file:modules/home/media/default.nix][Media Player]]           | [[https://mpv.io][MPV!]] 🎬 (its MVP too)                 |
 | [[file:modules/home/emacs/.configs/elfeed.org][RSS Reader]]             | [[https://github.com/skeeto/elfeed][Elfeed]] 📰 (Again, Emacs)              |
 | [[file:modules/home/media/default.nix][Music Player]]           | [[https://github.com/ncmpcpp/ncmpcpp][Ncmpcpp]] or [[https://github.com//mingus][Mingus in Emacs]] 🎶         |
 | [[file:modules/home/foot/default.nix][Terminal]]               | [[https://codeberg.org/dnkl/foot][Foot]] via footclient                  |
@@ -23,6 +23,7 @@ Feel free to open an issue and ask me doubts or some improvements you wanna info
 If you really wanna talk/discuss with me, open an issue so I will join on some media (Irc/matrix or telegram)
 
 * Welcome to 'Will of D' flakes system
+** My Linux Journey
 
 My linux journey was from Linux Mint > EndeavourOS > Arch Linux > and now NixOS.
 
@@ -38,6 +39,10 @@ Tbh I loved LM and Arch alot, I was a devotee to Arch too, and I hated Nix when 
   That is when I thought nix lacked Documentation or good YouTuber to speak of, I really wish one of them could explain and make it their distro to explain timely on things.
 
   Fine, somehow forced myself and came a long way of setting up Good working nixos config, now I'm on flake
+
+  Nix is great if it works as expected or if we make it work, but, if I get stuck or the issue goes for days that is when I really hate Nix, because it ain't easy to solve some unique issues. Most of these apply for HomeManager actually, it adds more trouble.
+
+  It is adviced to learn how Nix works or Nix as Functional Programming Language.
 
 *** Now if you get doubt of, "Should I try NixOS?"
 

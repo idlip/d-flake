@@ -7,7 +7,7 @@
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     cached-nix-shell
-    # firefox
+    firefox
     pcmanfm
     brave librewolf ungoogled-chromium deluged
     yt-dlp

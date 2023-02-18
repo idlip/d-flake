@@ -26,7 +26,7 @@
     ./rofi
     ./sioyek
     ./alacritty
-    ./firefox
+    # ./firefox
     
     ./emacs
     # ./swaylock

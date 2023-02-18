@@ -19,6 +19,7 @@
 
   services = {
 
+    gvfs.enable = true;
     syncthing = {
       enable = true;
       user = "i";

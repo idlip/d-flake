@@ -6,12 +6,12 @@
   home.packages = with pkgs; [zsh-forgit gitflow];
   programs.git = {
     enable = true;
-    userName = "sioodmy";
-    userEmail = "hello@sioodmy.dev";
-    signing = {
-      key = "056CFD15A9F99B0E";
-      signByDefault = true;
-    };
+    userName = "Dilip";
+    userEmail = "igoldlip@gmail.com";
+    # signing = {
+    #   key = "056CFD15A9F99B0E";
+    #   signByDefault = true;
+    # };
     ignores = [
       ".cache/"
       ".DS_Store"
@@ -25,9 +25,10 @@
       "result-*"
     ];
     extraConfig = {
+      color.ui = true;
       init = {defaultBranch = "main";};
       delta = {
-        syntax-theme = "Nord";
+        syntax-theme = "Gruvbox";
         line-numbers = true;
       };
       branch.autosetupmerge = "true";

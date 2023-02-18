@@ -100,7 +100,7 @@
     programs = {
     mpv = {
       enable = true;
-      scripts = with pkgs.mpvScripts; [mpris thumbnail sponsorblock];
+      # scripts = with pkgs.mpvScripts; [ thumbnail sponsorblock];
       bindings = {
         "l" = "seek 5";
         "h" = "seek -5";

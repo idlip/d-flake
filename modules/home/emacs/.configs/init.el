@@ -82,6 +82,17 @@
   (balance-windows)
   (other-window 1))
 
+(defun d/scroll-down ()
+       (interactive)
+       (pixel-scroll-precision-scroll-down 40))
+
+(defun d/scroll-up ()
+       (interactive)
+       (pixel-scroll-precision-scroll-up 40))
+
+(global-set-key (kbd "M-v") #'d/scroll-up)
+(global-set-key (kbd "C-v") #'d/scroll-down)
+
 (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
 (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 
@@ -95,8 +106,8 @@
 
 (global-set-key (kbd "C-c f") 'window-focus-mode)
 (global-set-key (kbd "C-M-r") 'undo-redo)
-(global-set-key (kbd "M-n") 'scroll-up-line)
-(global-set-key (kbd "M-p") 'scroll-down-line)
+(global-set-key (kbd "M-j") 'avy-goto-char-timer)
+(global-set-key (kbd "M-K") 'avy-kill-region)
 (global-set-key (kbd "C-x C-k") 'd/kill-buffer)
 (global-set-key (kbd "C-x k") 'd/kill-buffer)
 (global-set-key (kbd "M-%") 'query-replace-regexp)
@@ -232,39 +243,35 @@
   "fc"  '(:ignore t :which-key "configs")
   "fce" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/config.org"))))
 
-(use-package doom-themes
-  :ensure t
-  :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-gruvbox t)
+;; (use-package doom-themes
+;;   :ensure t
+;;   :config
+;;   ;; Global settings (defaults)
+;;   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+;;         doom-themes-enable-italic t) ; if nil, italics is universally disabled
+;;   ;; (load-theme 'doom-gruvbox t)
 
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
-  (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  (doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+;;   ;; Enable flashing mode-line on errors
+;;   (doom-themes-visual-bell-config)
+;;   ;; Enable custom neotree theme (all-the-icons must be installed!)
+;;   (doom-themes-neotree-config)
+;;   ;; or for treemacs users
+;;   (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+;;   (doom-themes-treemacs-config)
+;;   ;; Corrects (and improves) org-mode's native fontification.
+;;   (doom-themes-org-config))
 
-(use-package modus-themes)
-(use-package catppuccin-theme
-  :config
-  (setq catppuccin-flavor 'mocha)
-  (load-theme 'catppuccin t))
+
 
 (use-package all-the-icons)
 
- (use-package doom-modeline
-   :init (doom-modeline-mode 1)
-   (setq doom-modeline-time-icon nil)
-   (setq doom-modeline-bar-width 3)
-   (setq doom-modeline-major-mode-icon t)
-   :custom ((doom-modeline-height 10)
-            (doom-modeline-buffer-encoding nil)))
+ ;; (use-package doom-modeline
+ ;;   :init (doom-modeline-mode 1)
+ ;;   (setq doom-modeline-time-icon nil)
+ ;;   (setq doom-modeline-bar-width 3)
+ ;;   (setq doom-modeline-major-mode-icon t)
+ ;;   :custom ((doom-modeline-height 10)
+ ;;            (doom-modeline-buffer-encoding nil)))
 
 (use-package which-key
   :defer 0
@@ -700,6 +707,7 @@
          (Info-mode         . olivetti-mode)
          (org-mode          . olivetti-mode)
          (dashboard-mode    . olivetti-mode)
+	 (sdcv-mode         . olivetti-mode)
          (eww-mode          . olivetti-mode)
          (fundamental-mode  . olivetti-mode)
          (nov-mode          . olivetti-mode)
@@ -711,6 +719,11 @@
   (olivetti-body-width 0.86)
   :delight " ⊛")
   ; "Ⓐ" "⊗"
+
+(use-package catppuccin-theme
+  :config
+  (setq catppuccin-flavor 'mocha)
+  (load-theme 'catppuccin t))
 
 (with-eval-after-load 'org
   (org-babel-do-load-languages
@@ -753,15 +766,14 @@
   ;; (set-face-attribute 'org-modern-symbol nil :family "Iosevka")
 
   ;; Add frame borders and window dividers
-  (modify-all-frames-parameters
-   '((right-divider-width . 15)
-     (internal-border-width . 15)))
-  (dolist (face '(window-divider
-                  window-divider-first-pixel
-                  window-divider-last-pixel))
-    (face-spec-reset-face face)
-    (set-face-foreground face (face-attribute 'default :background)))
-  (set-face-background 'fringe (face-attribute 'default :background))
+  ;; (modify-all-frames-parameters
+  ;;  '((right-divider-width . 15)
+  ;;    (internal-border-width . 15)))
+  ;; (dolist (face '(window-divider
+  ;;                 window-divider-first-pixel
+  ;;                 window-divider-last-pixel))
+  ;;   (face-spec-reset-face face)
+  ;;   (set-face-foreground face (face-attribute 'default :background)))
 
   (setq
    ;; Edit settings
@@ -817,6 +829,9 @@
   :init
   (corfu-history-mode)
   (global-corfu-mode))
+
+(unless (display-graphic-p)
+  (corfu-terminal-mode +1))
 
 ;; Add extensions
 (use-package cape
@@ -932,6 +947,7 @@
 (use-package flycheck
   :init (global-flycheck-mode))
 
+
 (use-package mingus
   :config
   (advice-add 'mingus-playlist-mode :after #'olivetti-mode)
@@ -956,9 +972,10 @@
   (setq image-cache-eviction-delay 3)
   (setq pdf-annot-activate-created-annotations t)
   (setq pdf-view-use-dedicated-register nil)
-  (setq pdf-view-max-image-width 1680)
+  (setq pdf-view-max-image-width 2000)
   (add-hook 'pdf-view-mode-hook (lambda () (cua-mode 0)))
   (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
+  (define-key pdf-view-mode-map (kbd "M-g g") 'pdf-view-goto-page)
   (setq pdf-outline-imenu-use-flat-menus t)
   (setq pdf-view-resize-factor 1.1)
   (define-key pdf-view-mode-map (kbd "h") 'pdf-annot-add-highlight-markup-annotation)
@@ -1280,11 +1297,11 @@
     :config
   (define-key eww-mode-map (kbd "e") #'readable-article)
   (define-key eww-mode-map (kbd "Q") #'d/kill-buffer)
+  (define-key eww-mode-map (kbd "M-v") #'d/scroll-up)
+  (define-key eww-mode-map (kbd "C-v") #'d/scroll-down)
   (define-key eww-mode-map (kbd "F") #'d/visit-urls)
   (define-key eww-mode-map (kbd "U") #'elfeed-update)
   (define-key eww-mode-map (kbd "j") #'d/external-browser)
-  (define-key eww-mode-map (kbd "C-v") #'scroll-up-line)
-  (define-key eww-mode-map (kbd "M-v") #'scroll-down-line)
   (define-key eww-mode-map (kbd "J") #'d/jump-urls))
 
   ;; Cool hacks
@@ -1544,10 +1561,6 @@
 ;; (set-fringe-mode 10)        ; Give some breathing room
 
 (menu-bar-mode -1)            ; Disable the menu bar
-(global-set-key (kbd "C-v") 'scroll-up-line)
-(global-set-key (kbd "M-v") 'scroll-down-line)
-(global-set-key (kbd "M-j") 'avy-goto-char-timer)
-(global-set-key (kbd "M-K") 'avy-kill-region)
 
 (setq-default mode-line-format nil)
 
@@ -1589,8 +1602,8 @@
  eww-search-prefix "https://lite.duckduckgo.com/lite/?q=")
 
 ;; Set frame transparency
-(set-frame-parameter (selected-frame) 'alpha-background 90)
-(add-to-list 'default-frame-alist `(alpha-background . 90))
+(set-frame-parameter (selected-frame) 'alpha-background 92)
+(add-to-list 'default-frame-alist `(alpha-background . 92))
 (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
@@ -1640,10 +1653,12 @@
 ;; Don't resize the frames in steps; it looks weird, especially in tiling window
 ;; managers, where it can leave unseemly gaps.
 (setq frame-resize-pixelwise t)
+(setq pixel-dead-time 10000)
 
 ;; But do not resize windows pixelwise, this can cause crashes in some cases
 ;; when resizing too many windows at once or rapidly.
 (setq window-resize-pixelwise nil)
+(pixel-scroll-precision-mode 1)
 
 ;; Favor vertical splits over horizontal ones. Monitors are trending toward
 ;; wide, rather than tall.
