@@ -16,11 +16,22 @@
   + You get vterm, which wont build that easily in normal emacs config
 **** Planning 😴
 - [ ] Dont use Dashboard (as its useful), Instead make use of Org file as dashboard. Refer DT video
-- [ ] Make README.org or improve this Config.org so its informational to all
-- [ ] Learn more stuffs from Experienced and Master Users, like Purcel, bbsatov and others
+- [ ] Add daily quotes for ~initial-scratch-message~ 
+- [ ] Make README.org or improve this Config.org so it is informational to all
+- [ ] Learn more stuffs from Experienced and Master Users, like Purcell, bbsatov and others
 - [ ] Learn elisp for enhancing some more stuffs
 - [ ] Share some cool stuffs with others and explain it very crisp and clearly
 
+** TLDWR - Features 🌟
+/too long, don't wanna read/
+
+Some of the highlights which you might wanna copy or take from this config :
+
+1. RSS focused, has good workflow to read. You have bionic-reading too!
+2. Smoother experience and made for Pure-Gtk, Wayland use
+3. Zen, Distraction free text viewing experience (No mode-line)
+
+  
 * Start-ify 🔰
 Maanage Font size, Initialize Package setup and sends you startup time (Daemonize 👹 your Emacs)
 #+begin_src emacs-lisp
