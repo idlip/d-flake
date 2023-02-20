@@ -870,11 +870,13 @@
   (setq sdcv-say-word-p t)
   (setq sdcv-dictionary-data-dir "/home/i/.local/share/stardict/") 
   (setq sdcv-dictionary-simple-list   
-        '("wn"
-          "enjp"))
+        '("wn" "enjp" "thesaurus"))
   )
 (define-key sdcv-mode-map (kbd "q") #'kill-buffer-and-window)
+(define-key sdcv-mode-map (kbd "n") 'sdcv-next-dictionary)
+(define-key sdcv-mode-map (kbd "p") 'sdcv-previous-dictionary)
 (define-key help-mode-map (kbd "q") #'kill-buffer-and-window)
+(define-key sdcv-mode-map (kbd "M-q") 'vterm-send-next-key)
 
 (use-package pdf-tools
   :init

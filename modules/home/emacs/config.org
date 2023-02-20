@@ -1,4 +1,4 @@
-﻿#+title: D Emacs Station
+﻿#+TITLE: D Emacs Station
 #+PROPERTY: header-args:emacs-lisp :tangle ./.configs/init.el
 #+auto_tangle: t
 
@@ -11,8 +11,9 @@
 - [X] No need doom-themes too, use one theme (Either vivendi or Catppuccin)
 - [X] Setup robust and extensive use for Rss feeds
 - [X] Manage emacs nix-way.
-    PS : Just managing packages in nix style. Init file is good enough as such.
-  + Benefits are package management becomes easy with just ~nixos-rebuild~
+  PS : Just managing packages in nix style. Init file is good enough as such.
+    Benefits are :
+  + package management becomes easy with just ~nixos-rebuild~
   + You get vterm, which wont build that easily in normal emacs config
 **** Planning 😴
 - [ ] Dont use Dashboard (as its useful), Instead make use of Org file as dashboard. Refer DT video
@@ -33,7 +34,7 @@ Some of the highlights which you might wanna copy or take from this config :
 
   
 * Start-ify 🔰
-Maanage Font size, Initialize Package setup and sends you startup time (Daemonize 👹 your Emacs)
+Manage Font size, Initialize Package setup and sends you startup time (Daemonize 👹 your Emacs)
 #+begin_src emacs-lisp
   ;; You will most likely need to adjust this font size for your system!
   (defvar default-font-size 190)
@@ -201,16 +202,8 @@ As a beginner, this might be useful as you might be used to be in Doom-Emacs or 
     ;; window manager
     "w"  '(:ignore t :which-key "window")
     "wf" '(window-focus-mode :which-key "max window")
-    "wh" '(evil-window-down :which-key "down window")
-    "w c"   '(evil-window-delete :which-key "Close window")
-    "w n"   '(evil-window-new :which-key "New window")
-    "w s"   '(evil-window-split :which-key "Horizontal split window")
-    "w v"   '(evil-window-vsplit :which-key "Vertical split window")
-    "wj" '(evil-window-left :which-key "left window")
-    "wk" '(evil-window-up :which-key "up window")
-    "wl" '(evil-window-right :which-key "right window")
     "wq" '(d/kill-buffer :which-key "close buffer")
-    "ww" '(evil-window-next :which-key "next window")
+
 
     ;; Apps
     "p"  '(:ignore t :which-key "apps")
@@ -985,35 +978,36 @@ Not that intuitive to use as file manager, once you get a hand of emacs. You wil
 * Cool Stuffs 🧊
 Some small codes for good source.
 #+begin_src emacs-lisp
-(use-package reddigg
-  :config
-  (setq reddigg-subs '(bangalore india emacs fossdroid piracy aww)))
-(setq org-confirm-elisp-link-function nil)
+  (use-package reddigg
+    :config
+    (setq reddigg-subs '(bangalore india emacs fossdroid piracy aww)))
+  (setq org-confirm-elisp-link-function nil)
 
-;; (use-package howdoyou)
-(use-package undo-tree
-  :init (global-undo-tree-mode t))
-(use-package flycheck
-  :init (global-flycheck-mode))
+  ;; (use-package howdoyou)
+  (use-package undo-tree
+    :init (global-undo-tree-mode t))
+  (use-package flycheck
+    :init (global-flycheck-mode))
 
 
-(use-package mingus
-  :config
-  (advice-add 'mingus-playlist-mode :after #'olivetti-mode)
-  (advice-add 'mingus-browse-mode :after #'olivetti-mode))
-;; (use-package wikinforg)
-(use-package 0x0)
-(use-package sdcv
-  :config
-  (setq sdcv-say-word-p t)
-  (setq sdcv-dictionary-data-dir "/home/i/.local/share/stardict/") 
-  (setq sdcv-dictionary-simple-list   
-        '("wn"
-          "enjp"))
-  )
-(define-key sdcv-mode-map (kbd "q") #'kill-buffer-and-window)
-(define-key help-mode-map (kbd "q") #'kill-buffer-and-window)
-
+  (use-package mingus
+    :config
+    (advice-add 'mingus-playlist-mode :after #'olivetti-mode)
+    (advice-add 'mingus-browse-mode :after #'olivetti-mode))
+  ;; (use-package wikinforg)
+  (use-package 0x0)
+  (use-package sdcv
+    :config
+    (setq sdcv-say-word-p t)
+    (setq sdcv-dictionary-data-dir "/home/i/.local/share/stardict/") 
+    (setq sdcv-dictionary-simple-list   
+          '("wn" "enjp" "thesaurus"))
+    )
+  (define-key sdcv-mode-map (kbd "q") #'kill-buffer-and-window)
+  (define-key sdcv-mode-map (kbd "n") 'sdcv-next-dictionary)
+  (define-key sdcv-mode-map (kbd "p") 'sdcv-previous-dictionary)
+  (define-key help-mode-map (kbd "q") #'kill-buffer-and-window)
+  (define-key sdcv-mode-map (kbd "M-q") 'vterm-send-next-key)
 #+end_src
 * Document - The PDF 📎
 Pdf-tools is another great addition if you want to integrate well with Emacs.
