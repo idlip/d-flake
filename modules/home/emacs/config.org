@@ -1,38 +1,69 @@
-;; You will most likely need to adjust this font size for your system!
-(defvar default-font-size 190)
-(defvar default-variable-font-size 190)
-(setf use-default-font-for-symbols nil)
-(set-fontset-font t 'unicode "Noto Emoji" nil 'append)
+﻿#+title: D Emacs Station
+#+PROPERTY: header-args:emacs-lisp :tangle ./.configs/init.el
+#+auto_tangle: t
 
-(defun display-startup-time ()
-  (message "Emacs loaded in %s with %d garbage collections."
-           (format "%.2f seconds"
-                   (float-time
-                    (time-subtract after-init-time before-init-time)))
-           gcs-done))
+** Todo Stuffs (Feel free to say/add something. I will be glad!)
+**** Finally Done.. Ooof 😄
+- [X] Ditch evil-mode, go pure Emacs way!
+- [X] No need modeline, go zen-mode with minimal distraction
+    PS : Used ~olivetti-mode~ and ~(setq-default mode-line-format nil)~
+- [X] Clean and minimise unnecessary package/bloat
+- [X] No need doom-themes too, use one theme (Either vivendi or Catppuccin)
+- [X] Setup robust and extensive use for Rss feeds
+- [X] Manage emacs nix-way.
+    PS : Just managing packages in nix style. Init file is good enough as such.
+  + Benefits are package management becomes easy with just ~nixos-rebuild~
+  + You get vterm, which wont build that easily in normal emacs config
+**** Planning 😴
+- [ ] Dont use Dashboard (as its useful), Instead make use of Org file as dashboard. Refer DT video
+- [ ] Make README.org or improve this Config.org so its informational to all
+- [ ] Learn more stuffs from Experienced and Master Users, like Purcel, bbsatov and others
+- [ ] Learn elisp for enhancing some more stuffs
+- [ ] Share some cool stuffs with others and explain it very crisp and clearly
 
-(add-hook 'emacs-startup-hook #'display-startup-time)
-;; If you are thinking about adding codes for garbage-collect (gc-cons-threshold), we already did that in early-init.el
+* Start-ify 🔰
+Maanage Font size, Initialize Package setup and sends you startup time (Daemonize 👹 your Emacs)
+#+begin_src emacs-lisp
+  ;; You will most likely need to adjust this font size for your system!
+  (defvar default-font-size 190)
+  (defvar default-variable-font-size 190)
+  (setf use-default-font-for-symbols nil)
+  (set-fontset-font t 'unicode "Noto Emoji" nil 'append)
 
-;; Initialize package sources
-(require 'package)
+  (defun display-startup-time ()
+    (message "Emacs loaded in %s with %d garbage collections."
+             (format "%.2f seconds"
+                     (float-time
+                      (time-subtract after-init-time before-init-time)))
+             gcs-done))
 
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
+  (add-hook 'emacs-startup-hook #'display-startup-time)
+  ;; If you are thinking about adding codes for garbage-collect (gc-cons-threshold), we already did that in early-init.el
 
-(package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
+  ;; Initialize package sources
+  (require 'package)
 
-;; Initialize use-package on non-Linux platforms
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
+  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                           ("org" . "https://orgmode.org/elpa/")
+                           ("elpa" . "https://elpa.gnu.org/packages/")))
 
-(require 'use-package)
-(setq use-package-always-ensure t)
+  (package-initialize)
+  (unless package-archive-contents
+    (package-refresh-contents))
 
-(use-package no-littering)
+  ;; Initialize use-package on non-Linux platforms
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
+
+  (require 'use-package)
+  (setq use-package-always-ensure t)
+
+#+end_src
+
+* Cleanliness 📑
+Keep folders and backuping files clean!
+#+begin_src emacs-lisp
+  (use-package no-littering)
 
   ;; no-littering doesn't set this by default so we must place
   ;; auto save files in the same path as it uses for sessions
@@ -48,195 +79,213 @@
   (savehist-mode)
   :custom
   (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring)))
+#+end_src
 
-(defun split-and-follow-horizontally ()
-  "Basically to balance and change cursor to split window"
-  (interactive)
-  (split-window-below)
-  (balance-windows)
-  (other-window 1))
-
-(defun split-and-follow-vertically ()
-  "Basically to balance and change cursor to split window"
-  (interactive)
-  (split-window-right)
-  (balance-windows)
-  (other-window 1))
-
-(defun d/scroll-down ()
-  "Trust me, make scrolling alot smoother. +1 Makes you fall in love with Emacs again!"
-       (interactive)
-       (pixel-scroll-precision-scroll-down 40))
-
-(defun d/scroll-up ()
-  "Trust me, adds a wonderfull smooth scroll. You can do this by trackpad too (laptop)"
-       (interactive)
-       (pixel-scroll-precision-scroll-up 40))
-(defun d/refresh-buffer ()
-    "Revert buffer without confirmation."
+* Better Bindings ⌨️
+** Custom functions
+#+begin_src emacs-lisp
+  (defun split-and-follow-horizontally ()
+    "Basically to balance and change cursor to split window"
     (interactive)
-    (revert-buffer :ignore-auto :noconfirm))
+    (split-window-below)
+    (balance-windows)
+    (other-window 1))
 
-(defun window-focus-mode ()
-  "Make the window focused, it can toggled in and out"
-  (interactive)
-  (if (= 1 (length (window-list)))
-      (jump-to-register '_)
-    (progn
-      (set-register '_ (list (current-window-configuration)))
-      (delete-other-windows))))
+  (defun split-and-follow-vertically ()
+    "Basically to balance and change cursor to split window"
+    (interactive)
+    (split-window-right)
+    (balance-windows)
+    (other-window 1))
 
-(global-set-key (kbd "M-v") #'d/scroll-up)
-(global-set-key (kbd "C-v") #'d/scroll-down)
-(global-set-key (kbd "C-<f5>") #'d/refresh-buffer)
+  (defun d/scroll-down ()
+    "Trust me, make scrolling alot smoother. +1 Makes you fall in love with Emacs again!"
+         (interactive)
+         (pixel-scroll-precision-scroll-down 40))
 
-(global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
-(global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
-(global-set-key [C-tab] 'other-window)
-(global-set-key (kbd "C-c c") 'calendar)
+  (defun d/scroll-up ()
+    "Trust me, adds a wonderfull smooth scroll. You can do this by trackpad too (laptop)"
+         (interactive)
+         (pixel-scroll-precision-scroll-up 40))
+  (defun d/refresh-buffer ()
+      "Revert buffer without confirmation."
+      (interactive)
+      (revert-buffer :ignore-auto :noconfirm))
 
-(global-set-key (kbd "C-c f") 'window-focus-mode)
-;; (global-set-key (kbd "C-M-r") 'undo-redo)
-(global-set-key (kbd "C-M-r") 'undo-tree-redo) ;; If want to use undo-tree mode
-(global-set-key (kbd "M-j") 'avy-goto-char-timer) ;;Save ton to pain/strain
-(global-set-key (kbd "M-K") 'avy-kill-region) ;; Practise these two avy binding, it will be of great help
-(global-set-key (kbd "C-x C-k") 'd/kill-buffer) ;; My func to clear cache along killing buffer
-(global-set-key (kbd "C-x k") 'd/kill-buffer)
-(global-set-key (kbd "M-%") 'query-replace-regexp) ;; Hail regexp searching!
+  (defun window-focus-mode ()
+    "Make the window focused, it can toggled in and out"
+    (interactive)
+    (if (= 1 (length (window-list)))
+        (jump-to-register '_)
+      (progn
+        (set-register '_ (list (current-window-configuration)))
+        (delete-other-windows))))
 
-;; Make ESC quit prompts
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+#+end_src
+** Respected binds
+#+begin_src emacs-lisp
 
-(defalias 'yes-or-no-p 'y-or-n-p) ;; Make confirmation messages easy and not a pain.
+    (global-set-key (kbd "M-v") #'d/scroll-up)
+    (global-set-key (kbd "C-v") #'d/scroll-down)
+    (global-set-key (kbd "C-<f5>") #'d/refresh-buffer)
 
-;; First gotta unbind to use a key combo as general key. Maybe useful for custom bind and easy access. Make it for your liking
-(global-unset-key (kbd "M-SPC"))
+    (global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+    (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+    (global-set-key [C-tab] 'other-window)
+    (global-set-key (kbd "C-c c") 'calendar)
 
-(use-package general
-  :config
-  (general-create-definer leader-keys
-    :prefix "M-SPC"))
-(leader-keys
-  ;; Toggle modes and looks
-  "t"  '(:ignore t :which-key "toggles")
-  "tt" '(consult-theme :which-key "choose theme")
-  "tc" '(rainbow-mode :which-key "colorizer")
-  "te" '(insert-char :which-key "unicodes")
-  "tv" '(org-mode-visual-fill :which-key "visual reading")
-  "tm" '(bookmark-jump :which-key "bookmarks")
-  "tr" '(d/bionic-region :which-key "bionic reading region")
-  "tR" '(d/bionic-read :which-key "bionic reading buffer")
+    (global-set-key (kbd "C-c f") 'window-focus-mode)
+    ;; (global-set-key (kbd "C-M-r") 'undo-redo)
+    (global-set-key (kbd "C-M-r") 'undo-tree-redo) ;; If want to use undo-tree mode
+    (global-set-key (kbd "M-j") 'avy-goto-char-timer) ;;Save ton to pain/strain
+    (global-set-key (kbd "M-K") 'avy-kill-region) ;; Practise these two avy binding, it will be of great help
+    (global-set-key (kbd "C-x C-k") 'd/kill-buffer) ;; My func to clear cache along killing buffer
+    (global-set-key (kbd "C-x k") 'd/kill-buffer)
+    (global-set-key (kbd "M-%") 'query-replace-regexp) ;; Hail regexp searching!
 
-  ;; tabs mode
-  "y"  '(:ignore t :which-key "tabs")
-  "yn" '(tab-new :which-key "new tab")
-  "yk" '(tab-close :which-key "close tab")
-  "yl" '(tab-list :which-key "list tabs")
-  "ys" '(tab-switch :which-key "switch tabs")
-  "yu" '(tab-undo :which-key "undo tab")
-  "yr" '(tab-rename :which-key "rename tab")
-  "yn" '(tab-next :which-key "next tab(gt)")
+    ;; Make ESC quit prompts
+    (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-  ;; games
-  "g" '(:ignore t :which-key "games")
-  "gz" '(zone :which-key "zone out")
+    (defalias 'yes-or-no-p 'y-or-n-p) ;; Make confirmation messages easy and not a pain.
+
+#+end_src
+** General is our Leader
+As a beginner, this might be useful as you might be used to be in Doom-Emacs or you can make custom bind for your Favourite functions or commands, keys made easy via pneumonics
+#+begin_src emacs-lisp
+
+  ;; First gotta unbind to use a key combo as general key. Maybe useful for custom bind and easy access. Make it for your liking
+  (global-unset-key (kbd "M-SPC"))
+  
+  (use-package general
+    :config
+    (general-create-definer leader-keys
+      :prefix "M-SPC"))
+  (leader-keys
+    ;; Toggle modes and looks
+    "t"  '(:ignore t :which-key "toggles")
+    "tt" '(consult-theme :which-key "choose theme")
+    "tc" '(rainbow-mode :which-key "colorizer")
+    "te" '(insert-char :which-key "unicodes")
+    "tv" '(org-mode-visual-fill :which-key "visual reading")
+    "tm" '(bookmark-jump :which-key "bookmarks")
+    "tr" '(d/bionic-region :which-key "bionic reading region")
+    "tR" '(d/bionic-read :which-key "bionic reading buffer")
+
+    ;; tabs mode
+    "y"  '(:ignore t :which-key "tabs")
+    "yn" '(tab-new :which-key "new tab")
+    "yk" '(tab-close :which-key "close tab")
+    "yl" '(tab-list :which-key "list tabs")
+    "ys" '(tab-switch :which-key "switch tabs")
+    "yu" '(tab-undo :which-key "undo tab")
+    "yr" '(tab-rename :which-key "rename tab")
+    "yn" '(tab-next :which-key "next tab(gt)")
+
+    ;; games
+    "g" '(:ignore t :which-key "games")
+    "gz" '(zone :which-key "zone out")
 
 
-  ;; window manager
-  "w"  '(:ignore t :which-key "window")
-  "wf" '(window-focus-mode :which-key "max window")
-  "wh" '(evil-window-down :which-key "down window")
-  "w c"   '(evil-window-delete :which-key "Close window")
-  "w n"   '(evil-window-new :which-key "New window")
-  "w s"   '(evil-window-split :which-key "Horizontal split window")
-  "w v"   '(evil-window-vsplit :which-key "Vertical split window")
-  "wj" '(evil-window-left :which-key "left window")
-  "wk" '(evil-window-up :which-key "up window")
-  "wl" '(evil-window-right :which-key "right window")
-  "wq" '(d/kill-buffer :which-key "close buffer")
-  "ww" '(evil-window-next :which-key "next window")
+    ;; window manager
+    "w"  '(:ignore t :which-key "window")
+    "wf" '(window-focus-mode :which-key "max window")
+    "wh" '(evil-window-down :which-key "down window")
+    "w c"   '(evil-window-delete :which-key "Close window")
+    "w n"   '(evil-window-new :which-key "New window")
+    "w s"   '(evil-window-split :which-key "Horizontal split window")
+    "w v"   '(evil-window-vsplit :which-key "Vertical split window")
+    "wj" '(evil-window-left :which-key "left window")
+    "wk" '(evil-window-up :which-key "up window")
+    "wl" '(evil-window-right :which-key "right window")
+    "wq" '(d/kill-buffer :which-key "close buffer")
+    "ww" '(evil-window-next :which-key "next window")
 
-  ;; Apps
-  "p"  '(:ignore t :which-key "apps")
-  "pe" '(elfeed :which-key "rss reader")
-  "pw" '(eww :which-key "eww browser")
-  "pd" '(counsel-linux-app :which-key "app menu")
-  "pm" '(mingus-browse :tag "Name" :which-key "music player")
-  "pn" '(newsticker-treeview :tag "Name" :which-key "rss feeds")
-  "pr" '(:ignore t :which-key "reddit browser")
-  "prr" '(reddigg-view-sub :tag "Name" :which-key "subreddit")
-  "prp" '(reddigg-view-comments :tag "Name" :which-key "comment")
-  "prm" '(reddigg-view-frontpage :which-key "main page")
-  "ps" '(howdoyou-query :tag "Name" :which-key "stack overflow")
+    ;; Apps
+    "p"  '(:ignore t :which-key "apps")
+    "pe" '(elfeed :which-key "rss reader")
+    "pw" '(eww :which-key "eww browser")
+    "pd" '(counsel-linux-app :which-key "app menu")
+    "pm" '(mingus-browse :tag "Name" :which-key "music player")
+    "pn" '(newsticker-treeview :tag "Name" :which-key "rss feeds")
+    "pr" '(:ignore t :which-key "reddit browser")
+    "prr" '(reddigg-view-sub :tag "Name" :which-key "subreddit")
+    "prp" '(reddigg-view-comments :tag "Name" :which-key "comment")
+    "prm" '(reddigg-view-frontpage :which-key "main page")
+    "ps" '(howdoyou-query :tag "Name" :which-key "stack overflow")
 
-  "e" '(:ignore t :which-key "eww")
-  "ew" '(eww-search-words :which-key "open in eww")
-  "ef" '(elfeed-open-in-eww :which-key "open feed in eww")
+    "e" '(:ignore t :which-key "eww")
+    "ew" '(eww-search-words :which-key "open in eww")
+    "ef" '(elfeed-open-in-eww :which-key "open feed in eww")
 
-  "`" '(insert-char :which-key "Insert Char/Emoji")
-  ;; script
-  "," '(:ignore t :which-key "Script browser")
-  ",," '(d/external-browser :which-key "open links avy")
-  ",b" '(d/external-browser :which-key "External Browser")
-  ",`" '(insert-char :which-key "Insert Char/Emoji")
-  ",l" '(d/buffer-links :which-key "list buff link")
-  ",p" '(d/print-buffer-links :which-key "print links")
+    "`" '(insert-char :which-key "Insert Char/Emoji")
+    ;; script
+    "," '(:ignore t :which-key "Script browser")
+    ",," '(d/external-browser :which-key "open links avy")
+    ",b" '(d/external-browser :which-key "External Browser")
+    ",`" '(insert-char :which-key "Insert Char/Emoji")
+    ",l" '(d/buffer-links :which-key "list buff link")
+    ",p" '(d/print-buffer-links :which-key "print links")
 
-  ;; dictionary
-  "d" '(:ignore t :which-key "dictionary")
-  "d w" '(sdcv-search-pointer :which-key "word at point")
-  "d s" '(sdcv-search-input :which-key "search word")
-  "d d" '(sdcv-search-input :which-key "search word")
-  "d p" '(sdcv-search-pointer+ :which-key   "hover word at point")
-  "d f" '(sdcv-search-input+ :which-key "hover input word")
+    ;; dictionary
+    "d" '(:ignore t :which-key "dictionary")
+    "d w" '(sdcv-search-pointer :which-key "word at point")
+    "d s" '(sdcv-search-input :which-key "search word")
+    "d d" '(sdcv-search-input :which-key "search word")
+    "d p" '(sdcv-search-pointer+ :which-key   "hover word at point")
+    "d f" '(sdcv-search-input+ :which-key "hover input word")
 
-  ;; open
-  "o"  '(:ignore t :which-key "open-org")
-  "oo" '(org-capture :which-key "org template")
-  "oa" '(org-agenda :which-key "org agenda")
-  "oa" '(org-agenda :which-key "org agenda")
+    ;; open
+    "o"  '(:ignore t :which-key "open-org")
+    "oo" '(org-capture :which-key "org template")
+    "oa" '(org-agenda :which-key "org agenda")
+    "oa" '(org-agenda :which-key "org agenda")
 
-  ;; quickie
-  "RET" '(vterm :which-key "Terminal")
-  "<backtab>" '(previous-buffer :which-key "prev buffer")
-  "TAB" '(next-buffer :which-key "next buffer")
-  "n" '(dired :which-key "file browser")
-  ;;"s" '(swiper :which-key "search text")
-  "3" '(comment-line :which-key "ucomment")
+    ;; quickie
+    "RET" '(vterm :which-key "Terminal")
+    "<backtab>" '(previous-buffer :which-key "prev buffer")
+    "TAB" '(next-buffer :which-key "next buffer")
+    "n" '(dired :which-key "file browser")
+    ;;"s" '(swiper :which-key "search text")
+    "3" '(comment-line :which-key "ucomment")
 
-  ;; music
-  "m"  '(:ignore t :which-key "music")
-  "mp" '(mingus-toggle :tag "Name" :which-key "play/pause")
-  "m>" '(mingus-next :tag "Name" :which-key "next song")
-  "m<" '(mingus-prev :tag "Name" :which-key "prev song")
+    ;; music
+    "m"  '(:ignore t :which-key "music")
+    "mp" '(mingus-toggle :tag "Name" :which-key "play/pause")
+    "m>" '(mingus-next :tag "Name" :which-key "next song")
+    "m<" '(mingus-prev :tag "Name" :which-key "prev song")
 
-  ;; consults
-  "c" '(:ignore t :which-key "consultant")
-  "c b" '(consult-buffer :which-key "buffer list")
-  "c f" '(consult-find :which-key "find files")
-  "c r" '(consult-ripgrep :which-key "live grep dir")
-  "c l" '(consult-line :which-key "see-lines")
-  "c t" '(consult-theme :which-key "themer")
-  "c k" '(consult-bookmark :which-key "bookmarks")
-  "c m" '(consult-man :which-key "man pager")
+    ;; consults
+    "c" '(:ignore t :which-key "consultant")
+    "c b" '(consult-buffer :which-key "buffer list")
+    "c f" '(consult-find :which-key "find files")
+    "c r" '(consult-ripgrep :which-key "live grep dir")
+    "c l" '(consult-line :which-key "see-lines")
+    "c t" '(consult-theme :which-key "themer")
+    "c k" '(consult-bookmark :which-key "bookmarks")
+    "c m" '(consult-man :which-key "man pager")
 
-  ;; registers
-  "r" '(:ignore t :which-key "registers")
-  "r g" '(consult-register :which-key "register")
-  "r s" '(consult-register-store :which-key "store register")
-  "r l" '(consult-register-load :which-key "load register")
+    ;; registers
+    "r" '(:ignore t :which-key "registers")
+    "r g" '(consult-register :which-key "register")
+    "r s" '(consult-register-store :which-key "store register")
+    "r l" '(consult-register-load :which-key "load register")
 
-  ;; file
-  "f"  '(:ignore t :which-key "files")
-  "fd" '(dired :which-key "find directory")
-  "ff" '(find-file :which-key "find file")
-  "RET" '(vterm :which-key "Terminal")
-  "f r" '(config-reload :which-key "reload config")
+    ;; file
+    "f"  '(:ignore t :which-key "files")
+    "fd" '(dired :which-key "find directory")
+    "ff" '(find-file :which-key "find file")
+    "RET" '(vterm :which-key "Terminal")
+    "f r" '(config-reload :which-key "reload config")
 
-  ;; configs
-  "fc"  '(:ignore t :which-key "configs")
-  "fce" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/config.org"))))
+    ;; configs
+    "fc"  '(:ignore t :which-key "configs")
+    "fce" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/config.org"))))
 
+#+end_src
+
+* What Key? 🔤
+Many people know that emacs has lot of keychords, which aren't easy to remember, ~which-key~ is a package which shows cheatsheet for the keychords you press. Mostly will find helpful for ~C-x~ ~C-c~ or ~M-SPC~ (or yours general key/leader key)
+#+begin_src emacs-lisp
 (use-package which-key
   :defer 0
   :init
@@ -257,78 +306,101 @@
   (which-key-mode)
   (setq which-key-idle-delay 1))
 
+#+end_src
+
+* Color-ify 🎨
+Coloured parentheses or hex values are really needed for some usecases, obviously you know it lol.
+*Happy Ricing* but use Emacs Everywhere lol
+#+begin_src emacs-lisp
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 (use-package rainbow-mode
   :init (add-hook 'prog-mode-hook 'rainbow-mode))
-
+#+end_src
+* Good Mouse use? 🖱️
+Just don't use mouse, try to stay with keyboard, feel like *Pro*!
+But if you like clicks, tacks and ticks of you mouse, then go with it. (Mouse is a good invention lol)
+#+begin_src emacs-lisp
 (setq scroll-conservatively 101) ;; value greater than 100 gets rid of half page jumping
 (setq mouse-wheel-scroll-amount nil)
 (setq mouse-wheel-progressive-speed t) ;; accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+#+end_src
 
-(use-package vertico
-  :init
-  (vertico-mode)
+* Minad - The Messiah 😇
+    Daniel Mendler minad  is a great guy, It is one of the reason why I love Emacs and Moved to Emacs and use it everywhere as much as Possible.
+    Just see his git repo issues, he has it all solved, and he will explain and converse with clear and good explanation, I wondered how could a man be so dedicated to Emacs so well with very positive approach. Considering trying his packages and if possible, do Donate to him.
+    Just Awesome, if it were not for his packages, I probably would never tried Emacs. Now I hate vim/neovim, Idk why.
 
-  ;; Different scroll margin
-  (setq vertico-scroll-margin 1)
+** Vertico - The first ❤️
+Just check the [[https://github.com/minad/vertico][Vertico github]] repo, you will find great Readme file with rich information and some basic usage codes which is more than enough.
+#+begin_src emacs-lisp
+  (use-package vertico
+    :init
+    (vertico-mode)
 
-  ;; Show more candidates
-  ;; (setq vertico-count 20)
+    ;; Different scroll margin
+    (setq vertico-scroll-margin 1)
 
-  ;; Grow and shrink the Vertico minibuffer
-  (setq vertico-resize t)
+    ;; Show more candidates
+    ;; (setq vertico-count 20)
 
-  ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-  ;; (setq vertico-cycle t)
-  )
+    ;; Grow and shrink the Vertico minibuffer
+    (setq vertico-resize t)
 
-;; A few more useful configurations...
-(use-package emacs
-  :init
-  ;; Add prompt indicator to `completing-read-multiple'.
-  ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
-  (defun crm-indicator (args)
-    (cons (format "[CRM%s] %s"
-                  (replace-regexp-in-string
-                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-                   crm-separator)
-                  (car args))
-          (cdr args)))
-  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+    ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
+    ;; (setq vertico-cycle t)
+    )
+  
+  ;; A few more useful configurations...
+  (use-package emacs
+    :init
+    ;; Add prompt indicator to `completing-read-multiple'.
+    ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
+    (defun crm-indicator (args)
+      (cons (format "[CRM%s] %s"
+                    (replace-regexp-in-string
+                     "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                     crm-separator)
+                    (car args))
+            (cdr args)))
+    (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
 
-  ;; Do not allow the cursor in the minibuffer prompt
-  (setq minibuffer-prompt-properties
-        '(read-only t cursor-intangible t face minibuffer-prompt))
-  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+    ;; Do not allow the cursor in the minibuffer prompt
+    (setq minibuffer-prompt-properties
+          '(read-only t cursor-intangible t face minibuffer-prompt))
+    (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
-  (setq completion-cycle-threshold 3)
-  (setq tab-always-indent 'complete)
-  (setq enable-recursive-minibuffers t))
+    (setq completion-cycle-threshold 3)
+    (setq tab-always-indent 'complete)
+    (setq enable-recursive-minibuffers t))
 
-;; Optionally use the `orderless' completion style.
-(use-package orderless
-  :init
-  (setq completion-styles '(orderless basic)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles partial-completion)))))
-(define-key vertico-map "?" #'minibuffer-completion-help)
-(define-key vertico-map (kbd "M-RET") #'minibuffer-force-complete-and-exit)
-(define-key vertico-map (kbd "M-TAB") #'minibuffer-complete)
-(setq completion-styles '(substring orderless basic))
-(setq read-file-name-completion-ignore-case t
-      read-buffer-completion-ignore-case t
-      completion-ignore-case t)
-;; Use `consult-completion-in-region' if Vertico is enabled.
-;; Otherwise use the default `completion--in-region' function.
-;; (setq completion-in-region-function
-;;       (lambda (&rest args)
-;;         (apply (if vertico-mode
-;;                    #'consult-completion-in-region
-;;                  #'completion--in-region)
-;;                args)))
+  ;; Optionally use the `orderless' completion style.
+  (use-package orderless
+    :init
+    (setq completion-styles '(orderless basic)
+          completion-category-defaults nil
+          completion-category-overrides '((file (styles partial-completion)))))
+  (define-key vertico-map "?" #'minibuffer-completion-help)
+  (define-key vertico-map (kbd "M-RET") #'minibuffer-force-complete-and-exit)
+  (define-key vertico-map (kbd "M-TAB") #'minibuffer-complete)
+  (setq completion-styles '(substring orderless basic))
+  (setq read-file-name-completion-ignore-case t
+        read-buffer-completion-ignore-case t
+        completion-ignore-case t)
+  ;; Use `consult-completion-in-region' if Vertico is enabled.
+  ;; Otherwise use the default `completion--in-region' function.
+  ;; (setq completion-in-region-function
+  ;;       (lambda (&rest args)
+  ;;         (apply (if vertico-mode
+  ;;                    #'consult-completion-in-region
+  ;;                  #'completion--in-region)
+  ;;                args)))
 
+    #+end_src
+** Doctor Consultancy
+Another, one which make certain pains of emacs , so good that you will fall in Love with Emacs again!
+#+begin_src emacs-lisp
 (use-package consult
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (;; C-c bindings (mode-specific-map)
@@ -418,6 +490,11 @@
   (setq consult-narrow-key "<") ;; (kbd "C-+")
   )
 
+#+end_src
+
+** Info = Marginalia
+Gives good annotations for vertico and help menu. Good!
+#+begin_src emacs-lisp
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
   ;; Either bind `marginalia-cycle' globally or only in the minibuffer
@@ -432,6 +509,10 @@
   ;; enabled right away. Note that this forces loading the package.
   (marginalia-mode))
 
+#+end_src
+** Embark - Just Bark
+Really gets handy for experienced users, maybe difficult to understand for Beginners, but on thing you can try is embark act and export it. I also dont use this much (yea, a Newbie in some areas..)
+#+begin_src emacs-lisp
 (use-package embark
   :ensure t
 
@@ -459,6 +540,10 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
+#+end_src
+** Corfu - The Required Love
+Completion to next level, works even on terminal
+#+begin_src emacs-lisp
 (use-package corfu
   :defer 1
   :custom
@@ -492,7 +577,11 @@
 (unless (display-graphic-p)
   (corfu-terminal-mode +1))
 
-;; Add extensions
+#+end_src
+*** Extensify - Cape the Hero
+Cape for Rescue! Feel the power of Emacs Extensibility
+#+begin_src emacs-lisp
+  ;; Add extensions
   (use-package cape
     :bind (("C-c p p" . completion-at-point) ;; capf
            ("C-c p t" . complete-tag)        ;; etags
@@ -551,7 +640,11 @@
         (corfu-mode 1)))
     (add-hook 'minibuffer-setup-hook #'corfu-enable-always-in-minibuffer 1)
 
-(use-package org-modern)
+#+end_src
+** Moderinze - Organize
+You will see org just below this, this package helps make Org-Mode looks eye-candy and how it reached average audience.
+#+begin_src emacs-lisp
+  (use-package org-modern)
     (add-hook 'org-mode-hook #'org-modern-mode)
     (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
 
@@ -600,6 +693,13 @@
 
   (global-org-modern-mode)
 
+#+end_src
+* Organize Life 🗄️
+Life's Good if you Organize is well, don't worry if you feel organizing is not easy, Org for the rescue.
+Plain (naked) simple file can help maintain GTD, even hell lot more many people don't know about.
+Don't compare Notion or Logseq, Org-mode is on different league. These no match for it yet ( actually from 20 years lol). If you know Org, you know it. If not, go check YT.
+** Good Org
+#+begin_src emacs-lisp
 (defun org-font-setup ()
   ;; Replace list hyphen with dot
   (font-lock-add-keywords 'org-mode
@@ -778,6 +878,9 @@
 
   (org-font-setup))
 
+#+end_src
+** Handy Org
+#+begin_src emacs-lisp
 (with-eval-after-load 'org
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -801,6 +904,11 @@
   (add-to-list 'org-structure-template-alist '("lx" . "src latex"))
   (add-to-list 'org-structure-template-alist '("cal" . "src calc")))
 
+#+end_src
+* Eye Candy Looks 🍭
+** Olive Etiquette 🫒
+All texts from left is not intuitive, Spoils GUI end of emacs, feels like you are on Terminal all time. Also, you space on right side will be wasted, unless you use split window vertically. Centering content helps focus and make things looks tidy.
+#+begin_src emacs-lisp
 (use-package olivetti
   :hook ((text-mode         . olivetti-mode)
          (prog-mode         . olivetti-mode)
@@ -820,17 +928,31 @@
   :delight " ⊛")
   ; "Ⓐ" "⊗"
 
+#+end_src
+** Catppuccin 😻
+Ofcourse, what not without a really good colourscheme, should i say pastel?
+I was using doom=themes actually, but they are not that goodi tho I like doom-gruvbox alot. Catppuccin is also well made, dedicatingly for emacs.
++ Works very well with eww browser too, url bar looks fine.
+  I like  modus-vivendi too (Built-in)
+  Its subjective to you!
+  #+begin_src emacs-lisp
 (use-package catppuccin-theme
   :config
   (setq catppuccin-flavor 'mocha)
   (load-theme 'catppuccin t))
-
-;;; Markdown support
-(unless (package-installed-p 'markdown-mode)
-  (package-install 'markdown-mode))
-(setq markdown-command 
-  "/nix/store/ynskha10xj4gydnhii1wza0ar15x7mvx-pandoc-2.19.2/bin/pandoc -f markdown -t html -s --mathjax --highlight-style=pygments")
-
+  #+end_src
+* Language - IDE maybe? 💻
+I'm not a programmer, maybe will be expanded in future..
+#+begin_src emacs-lisp
+  ;;; Markdown support
+  (unless (package-installed-p 'markdown-mode)
+    (package-install 'markdown-mode))
+  (setq markdown-command 
+    "/nix/store/ynskha10xj4gydnhii1wza0ar15x7mvx-pandoc-2.19.2/bin/pandoc -f markdown -t html -s --mathjax --highlight-style=pygments")
+#+end_src
+* File Manager 📂
+Not that intuitive to use as file manager, once you get a hand of emacs. You will thank for this.
+#+begin_src emacs-lisp
 (use-package dired
   :ensure nil
   :commands (dired dired-jump)
@@ -845,6 +967,11 @@
 
 (use-package all-the-icons-dired)
 
+#+end_src
+
+* Cool Stuffs 🧊
+Some small codes for good source.
+#+begin_src emacs-lisp
 (use-package reddigg
   :config
   (setq reddigg-subs '(bangalore india emacs fossdroid piracy aww)))
@@ -874,6 +1001,10 @@
 (define-key sdcv-mode-map (kbd "q") #'kill-buffer-and-window)
 (define-key help-mode-map (kbd "q") #'kill-buffer-and-window)
 
+#+end_src
+* Document - The PDF 📎
+Pdf-tools is another great addition if you want to integrate well with Emacs.
+#+begin_src emacs-lisp
 (use-package pdf-tools
   :init
   (pdf-tools-install)
@@ -921,6 +1052,11 @@
                              (olivetti-mode)
                              (setq olivetti-body-width 0.45)))
 
+#+end_src
+
+* Functions Mania 🏅
+Some more functions copied and adapted well to my flow. You will also find it well.
+#+begin_src emacs-lisp
 (defun config-reload ()
   "Uncle dev created a function to reload Emacs config."
   (interactive)
@@ -1006,6 +1142,11 @@
         (put-text-property xWordBegin xBoldEndPos
                            'font-lock-face bionic-reading-face)))))
 
+#+end_src
+
+* Rss - Better Web 📰
+Use RSS, just switch to it, and save your time for other productive things. If you wanna follow lazy people and hit that 'like button and share and subscribe' go on.
+#+begin_src emacs-lisp
 (use-package elfeed
   :defer t
   :config
@@ -1075,6 +1216,12 @@
   (define-key eww-mode-map (kbd "j") #'d/external-browser)
   (define-key eww-mode-map (kbd "J") #'d/jump-urls))
 
+#+end_src
+
+** Enhanced Rss experience
+Make lot of betterment with reading workflow. Again, you save more time.
+Congratulations, if you are already using Rss, if not, don't worry, you can get started with some good info.
+#+begin_src emacs-lisp
 (defun d/external-browser ()
   (interactive)
   (link-hint-copy-link)
@@ -1177,6 +1324,11 @@
              (url (replace-regexp-in-string ".*@ " "" selection)))
         (browse-url-generic url (when arg 4)))))
 
+#+end_src
+
+* Lots of things, No need to talk 💜
+Idk why, but i guess these all should be the sane defaults.
+#+begin_src emacs-lisp
 (setq inhibit-startup-message t)
 
 (scroll-bar-mode -1)        ; Disable visible scrollbar
@@ -1299,6 +1451,11 @@
 
 (setq-default fill-column 80)
 
+#+end_src
+
+* Run Always, and be Everywhere 🏍️
+Run emacs as daemon and thank yourself for blazing fast clients of emacs.
+#+begin_src emacs-lisp
 (defun set-font-faces ()
   (message "Setting faces!")
   (set-face-attribute 'default nil :font "ComicCodeLigatures" :height default-font-size)
@@ -1318,3 +1475,5 @@
                   (set-font-faces))))
     (set-font-faces))
 (put 'narrow-to-region 'disabled nil)
+
+#+end_src

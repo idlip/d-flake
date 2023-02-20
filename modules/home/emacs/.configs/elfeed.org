@@ -86,6 +86,7 @@
 ** Emacs                                                              :emacs:
 *** [[https://sachachua.com/blog/category/emacs/feed][Sachi]]                                                             :sachi:
 *** [[https://planet.emacslife.com/atom.xml][Planet-Emacs]]
+*** [[https://protesilaos.com/feeds/][Prot Blogs]] :prot:
 ** Music                                                              :music:
 *** [[https://www.reddit.com/r/listentothis/search.rss?q=jazz&restrict_sr=on&sort=new&t=all/.rss][Jazz]] :jazz:
 *** [[https://www.reddit.com/r/listentothis/search.rss?q=classical&restrict_sr=on&sort=new&t=all/.rss][Classical]] :classical:
