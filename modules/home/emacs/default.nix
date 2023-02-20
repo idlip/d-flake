@@ -17,7 +17,7 @@ in
       no-littering  vertico-posframe rainbow-delimiters rainbow-mode vertico 
       orderless consult marginalia embark embark-consult org olivetti org-modern corfu cape
       markdown-mode nix-mode
-      all-the-icons-dired async dired-hide-dotfiles dired-single 
+      all-the-icons all-the-icons-dired async dired-hide-dotfiles dired-single 
       reddigg mingus pdf-tools vterm which-key
       org-mime catppuccin-theme corfu-terminal
       sdcv elfeed elfeed-org link-hint general powerthesaurus

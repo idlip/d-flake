@@ -121,7 +121,8 @@
   "t"  '(:ignore t :which-key "toggles")
   "tt" '(consult-theme :which-key "choose theme")
   "tc" '(rainbow-mode :which-key "colorizer")
-  "te" '(insert-char :which-key "unicodes")
+  "te" '(insert-char :which-key "characters")
+  "ti" '(all-the-icons-insert :which-key "icons")
   "tv" '(org-mode-visual-fill :which-key "visual reading")
   "tm" '(bookmark-jump :which-key "bookmarks")
   "tr" '(d/bionic-region :which-key "bionic reading region")
@@ -173,7 +174,8 @@
   "ew" '(eww-search-words :which-key "open in eww")
   "ef" '(elfeed-open-in-eww :which-key "open feed in eww")
 
-  "`" '(insert-char :which-key "Insert Char/Emoji")
+  "~" '(insert-char :which-key "Insert Char/Emoji")
+  "`" '(all-the-icons-insert :which-key " All Icons")    
   ;; script
   "," '(:ignore t :which-key "Script browser")
   ",," '(d/external-browser :which-key "open links avy")
@@ -235,7 +237,7 @@
 
   ;; configs
   "fc"  '(:ignore t :which-key "configs")
-  "fce" '(lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/config.org"))))
+  "fce" '(lambda () (interactive) (find-file (expand-file-name "~/.__D_NIX__/modules/home/emacs/config.org"))))
 
 (use-package which-key
   :defer 0
