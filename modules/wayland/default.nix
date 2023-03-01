@@ -37,7 +37,7 @@
       XDG_SESSION_TYPE = "wayland";
       SDL_VIDEODRIVER = "wayland";
       CLUTTER_BACKEND = "wayland";
-      GTK_THEME = "Qogir-Dark";
+      GTK_THEME = "Catppuccin-Mocha-Standard-Rosewater-Dark";
       WLR_DRM_DEVICES = "/dev/dri/card1:/dev/dri/card0";
 
       

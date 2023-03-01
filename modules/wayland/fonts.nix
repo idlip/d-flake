@@ -25,8 +25,8 @@
           "JetBrains Mono Nerd Font"
           "Noto Color Emoji"
         ];
-        sansSerif = ["Fira Code Nerd Font" "ComicCodeLigatures" "Noto Color Emoji"];
-        serif = ["Noto Serif" "Noto Color Emoji"];
+        sansSerif = ["Fira Code Nerd Font" "ComicCodeLigatures"];
+        serif = ["Noto Serif" "Fira Code Nerd Font"];
         emoji = ["Noto Color Emoji" "all-the-icons" "FontAwesome" "Material Icons" "symbola" "Material Design Icons" ];
       };
     };

@@ -146,16 +146,8 @@
   ;; window manager
   "w"  '(:ignore t :which-key "window")
   "wf" '(window-focus-mode :which-key "max window")
-  "wh" '(evil-window-down :which-key "down window")
-  "w c"   '(evil-window-delete :which-key "Close window")
-  "w n"   '(evil-window-new :which-key "New window")
-  "w s"   '(evil-window-split :which-key "Horizontal split window")
-  "w v"   '(evil-window-vsplit :which-key "Vertical split window")
-  "wj" '(evil-window-left :which-key "left window")
-  "wk" '(evil-window-up :which-key "up window")
-  "wl" '(evil-window-right :which-key "right window")
   "wq" '(d/kill-buffer :which-key "close buffer")
-  "ww" '(evil-window-next :which-key "next window")
+
 
   ;; Apps
   "p"  '(:ignore t :which-key "apps")
@@ -522,7 +514,7 @@
     ;; (add-to-list 'completion-at-point-functions #'cape-rfc1345)
     (add-to-list 'completion-at-point-functions #'cape-abbrev)
     (add-to-list 'completion-at-point-functions #'cape-ispell)
-    ;; (add-to-list 'completion-at-point-functions #'cape-dict)
+    (add-to-list 'completion-at-point-functions #'cape-dict)
     ;; (add-to-list 'completion-at-point-functions #'cape-symbol)
     ;; (add-to-list 'completion-at-point-functions #'cape-line)
     )
@@ -637,6 +629,7 @@
   (org-modern-mode 1)
   (org-display-inline-images)
   (variable-pitch-mode 1)
+  (flyspell-mode 1)
   (setq
    org-startup-indented t
    org-startup-folded t)
@@ -800,8 +793,26 @@
   (add-to-list 'org-structure-template-alist '("py" . "src python"))
   (add-to-list 'org-structure-template-alist '("txt" . "src text"))
   (add-to-list 'org-structure-template-alist '("conf" . "src conf"))
+  (add-to-list 'org-structure-template-alist '("nix" . "src nix"))    
   (add-to-list 'org-structure-template-alist '("lx" . "src latex"))
   (add-to-list 'org-structure-template-alist '("cal" . "src calc")))
+
+(use-package ispell
+  :no-require t
+  :config
+  (setq ispell-dictionary "en")
+  (setq ispell-highlight-face (quote flyspell-incorrect))
+  (setq ispell-silently-savep t))
+
+(use-package flyspell
+  :defer t
+  :init
+  (progn
+    (add-hook 'message-mode-hook 'turn-on-flyspell)
+    (add-hook 'org-mode-hook 'flyspell-mode)))
+
+(use-package powerthesaurus
+  :defer t)
 
 (use-package olivetti
   :hook ((text-mode         . olivetti-mode)
@@ -825,7 +836,7 @@
 (use-package catppuccin-theme
   :config
   (setq catppuccin-flavor 'mocha)
-  (load-theme 'catppuccin t))
+  (load-theme 'leuven-dark t))
 
 ;;; Markdown support
 (unless (package-installed-p 'markdown-mode)
@@ -840,6 +851,12 @@
          ("C-x C-d" . dired))
   :config
   (define-key dired-mode-map (kbd "q") 'kill-buffer-and-window)
+  (define-key dired-mode-map (kbd "l") 'dired-single-buffer)
+  (define-key dired-mode-map (kbd "n") 'dired-single-buffer)
+  (define-key dired-mode-map (kbd "p") 'dired-single-up-directory)
+  (define-key dired-mode-map (kbd "h") 'dired-single-up-directory)
+  (define-key dired-mode-map (kbd "j") 'dired-next-line)
+  (define-key dired-mode-map (kbd "k") 'dired-previous-line)    
   :custom ((dired-listing-switches "-agho --group-directories-first")))
 (setq dired-listing-switches "-alt --dired --group-directories-first -h -G")
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
@@ -918,7 +935,7 @@
     (pdf-cache-clear-data))
 
   (define-key pdf-view-mode-map (kbd "Q") 'd/kill-buffer))
-  (define-key image-mode-map (kbd "Q") 'd/kill-buffer)
+  (define-key image-mode-map (kbd "q") 'd/kill-buffer)
 
 ;; For Comic Manga
 (add-hook 'image-mode-hook (lambda ()
@@ -1017,7 +1034,8 @@
   (define-key elfeed-show-mode-map (kbd "i") #'d/bionic-read)
   (define-key elfeed-show-mode-map (kbd "r") #'elfeed-open-in-reddit)
   (define-key elfeed-show-mode-map (kbd "m") #'elfeed-toggle-show-star)
-  (setq-default elfeed-search-filter "@1-week-ago--1-day-ago +unread -news +")
+  ;; (setq-default elfeed-search-filter "@1-week-ago--1-day-ago +unread -news +")
+  (setq-default elfeed-search-filter "+unread -news +")
   (defalias 'elfeed-toggle-show-star
     (elfeed-expose #'elfeed-show-tag 'star))    
   (defalias 'elfeed-toggle-star
@@ -1067,7 +1085,7 @@
     (reddigg-view-comments (elfeed-entry-link entry))))
 
 (use-package eww
-    :config
+  :config
   (define-key eww-mode-map (kbd "e") #'readable-article)
   (define-key eww-mode-map (kbd "Q") #'d/kill-buffer)
   (define-key eww-mode-map (kbd "M-v") #'d/scroll-up)
@@ -1195,9 +1213,10 @@
 ;; (server-start)
 
 (setq use-dialog-box nil)
+(setq sentence-end-double-space nil)
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message
-      ";; Laugh and Live on, Don't get high!.\n")
+      ";; Type to your Will !.\n")
 (setq frame-inhibit-implied-resize t)
 ;;(global-prettify-symbols-mode t)
 

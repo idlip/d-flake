@@ -13,7 +13,7 @@
     yt-dlp
     fzf  ani-cli ytfzf jq
     neovim 
-    unzip
+    unzip aspell aspellDicts.en
     ripgrep nitch
     rsync
     alacritty

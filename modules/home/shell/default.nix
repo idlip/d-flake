@@ -30,13 +30,13 @@ in {
           error_symbol = " [](#df5b61)";
           success_symbol = "[](#6791c9)";
           vicmd_symbol = "[](bold yellow)";
-	  format = "[  📂 $directory$all$character  ](bold)";
+	        format = "[   $directory$all$character  ](bold)";
         };
         git_commit = {commit_hash_length = 4;};
         line_break.disabled = false;
         lua.symbol = "[](blue) ";
         python.symbol = "[](blue) ";
-	directory.read_only = " ";
+	      directory.read_only = " ";
 	nix_shell.symbol = " ";
         hostname = {
           ssh_only = true;
