@@ -933,6 +933,109 @@ Lets try ~ispell~ paired with ~aspell~ so its better writing.
     (use-package powerthesaurus
       :defer t)
 #+end_src
+** Denote
+Prot's package which might come handy to take notes and connect them.
+TODO : Learn more on this
+#+begin_src emacs-lisp
+  (use-package denote)
+  ;; Remember to check the doc strings of those variables.
+  (setq denote-directory (expand-file-name "~/Documents/notes/"))
+  (setq denote-known-keywords '("emacs" "philosophy" "politics" "economics"))
+  (setq denote-infer-keywords t)
+  (setq denote-sort-keywords t)
+  (setq denote-file-type nil) ; Org is the default, set others here
+  (setq denote-prompts '(title keywords))
+  (setq denote-excluded-directories-regexp nil)
+  (setq denote-excluded-keywords-regexp nil)
+
+  ;; Pick dates, where relevant, with Org's advanced interface:
+  (setq denote-date-prompt-use-org-read-date t)
+
+
+  ;; Read this manual for how to specify `denote-templates'.  We do not
+  ;; include an example here to avoid potential confusion.
+
+
+  ;; We allow multi-word keywords by default.  The author's personal
+  ;; preference is for single-word keywords for a more rigid workflow.
+  (setq denote-allow-multi-word-keywords t)
+
+  (setq denote-date-format nil) ; read doc string
+
+  ;; By default, we do not show the context of links.  We just display
+  ;; file names.  This provides a more informative view.
+  (setq denote-backlinks-show-context t)
+
+  ;; Also see `denote-link-backlinks-display-buffer-action' which is a bit
+  ;; advanced.
+
+  ;; If you use Markdown or plain text files (Org renders links as buttons
+  ;; right away)
+  (add-hook 'find-file-hook #'denote-link-buttonize-buffer)
+
+  ;; We use different ways to specify a path for demo purposes.
+  (setq denote-dired-directories
+        (list denote-directory
+              (thread-last denote-directory (expand-file-name "attachments"))
+              (expand-file-name "~/Documents/books")))
+
+  ;; Generic (great if you rename files Denote-style in lots of places):
+  ;; (add-hook 'dired-mode-hook #'denote-dired-mode)
+  ;;
+  ;; OR if only want it in `denote-dired-directories':
+  (add-hook 'dired-mode-hook #'denote-dired-mode-in-directories)
+
+  ;; Here is a custom, user-level command from one of the examples we
+  ;; showed in this manual.  We define it here and add it to a key binding
+  ;; below.
+  (defun my-denote-journal ()
+    "Create an entry tagged 'journal', while prompting for a title."
+    (interactive)
+    (denote
+     (denote--title-prompt)
+     '("journal")))
+
+  ;; Denote DOES NOT define any key bindings.  This is for the user to
+  ;; decide.  For example:
+  (let ((map global-map))
+    (define-key map (kbd "C-c n j") #'my-denote-journal) ; our custom command
+    (define-key map (kbd "C-c n n") #'denote)
+    (define-key map (kbd "C-c n N") #'denote-type)
+    (define-key map (kbd "C-c n d") #'denote-date)
+    (define-key map (kbd "C-c n s") #'denote-subdirectory)
+    (define-key map (kbd "C-c n t") #'denote-template)
+    ;; If you intend to use Denote with a variety of file types, it is
+    ;; easier to bind the link-related commands to the `global-map', as
+    ;; shown here.  Otherwise follow the same pattern for `org-mode-map',
+    ;; `markdown-mode-map', and/or `text-mode-map'.
+    (define-key map (kbd "C-c n i") #'denote-link) ; "insert" mnemonic
+    (define-key map (kbd "C-c n I") #'denote-link-add-links)
+    (define-key map (kbd "C-c n b") #'denote-link-backlinks)
+    (define-key map (kbd "C-c n f f") #'denote-link-find-file)
+    (define-key map (kbd "C-c n f b") #'denote-link-find-backlink)
+    ;; Note that `denote-rename-file' can work from any context, not just
+    ;; Dired bufffers.  That is why we bind it here to the `global-map'.
+    (define-key map (kbd "C-c n r") #'denote-rename-file)
+    (define-key map (kbd "C-c n R") #'denote-rename-file-using-front-matter))
+
+  ;; Key bindings specifically for Dired.
+  (let ((map dired-mode-map))
+    (define-key map (kbd "C-c C-d C-i") #'denote-link-dired-marked-notes)
+    (define-key map (kbd "C-c C-d C-r") #'denote-dired-rename-marked-files)
+    (define-key map (kbd "C-c C-d C-R") #'denote-dired-rename-marked-files-using-front-matter))
+
+  (with-eval-after-load 'org-capture
+    (setq denote-org-capture-specifiers "%l\n%i\n%?")
+    (add-to-list 'org-capture-templates
+                 '("n" "New note (with denote.el)" plain
+                   (file denote-last-path)
+                   #'denote-org-capture
+                   :no-save t
+                   :immediate-finish nil
+                   :kill-buffer t
+                   :jump-to-captured t)))
+
+#+end_src
 * Eye Candy Looks 🍭
 ** Olive Etiquette 🫒
 All texts from left is not intuitive, Spoils GUI end of emacs, feels like you are on Terminal all time. Also, you space on right side will be wasted, unless you use split window vertically. Centering content helps focus and make things looks tidy.
@@ -969,14 +1072,49 @@ I was using doom=themes actually, but they are not that goodi tho I like doom-gr
   (setq catppuccin-flavor 'mocha)
   (load-theme 'catppuccin t))
   #+end_src
+** Beframe
+Managing frames and their buffers handy way. Gets rid of using tab-bar or windows
+
+#+begin_src emacs-lisp
+  (use-package beframe)
+    ;; This is the default value.  Write here the names of buffers that
+    ;; should not be beframed.
+    (setq beframe-global-buffers '("*scratch*" "*Messages*" "*Backtrace*"))
+
+    (beframe-mode 1)
+
+    ;; This is just an example.  We do not define any key bindings.  You
+    ;; do not need this command if you enable `beframe-mode', as
+    ;; `switch-to-buffer' only shows a list of beframed buffers.
+    (define-key global-map (kbd "C-x B") #'beframe-switch-buffer)
+
+  (defvar consult-buffer-sources)
+(declare-function consult--buffer-state "consult")
+
+(with-eval-after-load 'consult
+  (defface beframe-buffer
+    '((t :inherit font-lock-string-face))
+    "Face for `consult' framed buffers.")
+
+  (defvar beframe--consult-source
+    `( :name     "Frame-specific buffers (current frame)"
+       :narrow   ?F
+       :category buffer
+       :face     beframe-buffer
+       :history  beframe-history
+       :items    ,#'beframe--buffer-names
+       :action   ,#'switch-to-buffer
+       :state    ,#'consult--buffer-state))
+
+  (add-to-list 'consult-buffer-sources 'beframe--consult-source))
+
+#+end_src
 * Language - IDE maybe? 💻
 I'm not a programmer, maybe will be expanded in future..
 #+begin_src emacs-lisp
   ;;; Markdown support
   (unless (package-installed-p 'markdown-mode)
     (package-install 'markdown-mode))
-  (setq markdown-command 
-    "/nix/store/ynskha10xj4gydnhii1wza0ar15x7mvx-pandoc-2.19.2/bin/pandoc -f markdown -t html -s --mathjax --highlight-style=pygments")
 #+end_src
 * File Manager 📂
 Not that intuitive to use as file manager, once you get a hand of emacs. You will thank for this.
@@ -1423,8 +1561,8 @@ Idk why, but i guess these all should be the sane defaults.
    eww-search-prefix "https://lite.duckduckgo.com/lite/?q=")
 
   ;; Set frame transparency
-  (set-frame-parameter (selected-frame) 'alpha-background 92)
-  (add-to-list 'default-frame-alist `(alpha-background . 92))
+  (set-frame-parameter (selected-frame) 'alpha-background 52)
+  (add-to-list 'default-frame-alist `(alpha-background . 52))
   (set-frame-parameter (selected-frame) 'fullscreen 'maximized)
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 

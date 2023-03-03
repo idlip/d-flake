@@ -8,7 +8,7 @@
   home.packages = with pkgs; [
     cached-nix-shell
     firefox
-    pcmanfm
+    pcmanfm libreoffice
     brave librewolf ungoogled-chromium deluged
     yt-dlp
     fzf  ani-cli ytfzf jq

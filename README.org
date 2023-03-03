@@ -1,3 +1,12 @@
+*Note :*
+   I was having little hard time with opening files as it was modules. I moved all of this config to org file, with power of org-babel. I can make workflow very easy.
++   Single org file to manage my whole system???
++   Doesn't that Sound cool? 
+
+   check it out here *↝* https://github.com/idlip/d-nix.git
+
+   /This repo might not see changes/updates/
+
 *** Utilities that are Best!
 
 |------------------------+--------------------------------------|
